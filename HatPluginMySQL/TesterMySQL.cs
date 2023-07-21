@@ -316,6 +316,46 @@ namespace HatPluginMySql
             return false;
         }
 
+        /* Проверяет отсутствия значения в таблице базы данных */
+        public bool AssertDontHaveInTable(string tableName, string columnName, string value)
+        {
+            if (_tester.DefineTestStop() == true) return false;
+
+            try
+            {
+                _command = new MySql.Data.MySqlClient.MySqlCommand();
+                _command.Connection = _connection;
+                _command.CommandType = CommandType.Text;
+                _command.CommandText = $"SELECT * FROM {tableName} WHERE {columnName} = {value}";
+                int result = _command.ExecuteNonQuery();
+
+                if (result > 0)
+                {
+                    _tester.SendMessageDebug($"AssertDontHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", $"AssertDontHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", Tester.FAILED, $"В таблице {tableName} присутствует запись со значением {value} в колонке {columnName}", $"In the table {tableName} there is an entry with the value {value} in the column {columnName}", Tester.IMAGE_STATUS_FAILED);
+                    _tester.TestStopAsync();
+                    return false;
+                }
+                else
+                {
+                    _tester.SendMessageDebug($"AssertDontHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", $"AssertDontHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", Tester.PASSED, $"В таблице {tableName} в колонке {columnName} нет записи со значением {value}", $"In the {tableName} table, there is no entry in the {columnName} column with the value {value}", Tester.IMAGE_STATUS_PASSED);
+                    return true;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                _tester.SendMessageDebug($"AssertDontHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", $"AssertDontHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", Tester.FAILED,
+                "Произошла ошибка: " + ex.Message + Environment.NewLine + Environment.NewLine + "Полное описание ошибка: " + ex.ToString(),
+                    "Error: " + ex.Message + Environment.NewLine + Environment.NewLine + "Full description of the error: " + ex.ToString(),
+                    Tester.IMAGE_STATUS_FAILED);
+                _tester.TestStopAsync();
+                _tester.ConsoleMsgError(ex.ToString());
+            }
+
+            _tester.TestStopAsync();
+            return false;
+        }
+
+
 
     }
 }
