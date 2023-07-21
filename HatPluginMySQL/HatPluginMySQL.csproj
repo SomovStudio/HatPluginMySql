@@ -7,8 +7,8 @@
     <ProjectGuid>{60C3DF9C-BB3E-4E2A-BE1E-CACD34FD8964}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HatPluginMySQL</RootNamespace>
-    <AssemblyName>HatPluginMySQL</AssemblyName>
+    <RootNamespace>HatPluginMySql</RootNamespace>
+    <AssemblyName>HatPluginMySql</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -97,7 +97,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TesterMySQL.cs" />
+    <Compile Include="TesterMySql.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -10,15 +10,15 @@ using MySql.Data.MySqlClient;
 using HatFramework;
 using System.Data;
 
-namespace HatPluginMySQL
+namespace HatPluginMySql
 {
-    public class TesterMySQL
+    public class TesterMySql
     {
         private Tester _tester;
         private MySqlConnection _connection = null;
         private MySqlCommand _command = null;
 
-        public TesterMySQL(Tester tester)
+        public TesterMySql(Tester tester)
         {
             _tester = tester;
         }
