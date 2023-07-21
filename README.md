@@ -1,2 +1,2 @@
-# HatPluginMySQL
-Plugin MySQL from Browser Hat
+# HatPluginMySql
+Плагин MySql для браузера Hat
