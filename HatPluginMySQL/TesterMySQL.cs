@@ -292,7 +292,7 @@ namespace HatPluginMySql
 
                 if (result < 0)
                 {
-                    _tester.SendMessageDebug($"AssertHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", $"AssertHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", Tester.FAILED, $"В таблице {tableName} в колонке {columnName} нет записи со значением {value}", $"In the {tableName} table, there is no entry in the {columnName} column with the value {value}", Tester.IMAGE_STATUS_FAILED);
+                    _tester.SendMessageDebug($"AssertHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", $"AssertHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", Tester.FAILED, $"В таблице {tableName} в колонке {columnName} нет записи со значением {value} {Environment.NewLine}(ЗАПРОС: {_command.CommandText})", $"In the {tableName} table, there is no entry in the {columnName} column with the value {value} {Environment.NewLine}(QUERY: {_command.CommandText})", Tester.IMAGE_STATUS_FAILED);
                     _tester.TestStopAsync();
                     return false;
                 }
@@ -331,7 +331,7 @@ namespace HatPluginMySql
 
                 if (result > 0)
                 {
-                    _tester.SendMessageDebug($"AssertDontHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", $"AssertDontHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", Tester.FAILED, $"В таблице {tableName} присутствует запись со значением {value} в колонке {columnName}", $"In the table {tableName} there is an entry with the value {value} in the column {columnName}", Tester.IMAGE_STATUS_FAILED);
+                    _tester.SendMessageDebug($"AssertDontHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", $"AssertDontHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", Tester.FAILED, $"В таблице {tableName} присутствует запись со значением {value} в колонке {columnName} {Environment.NewLine}(ЗАПРОС: {_command.CommandText})\"", $"In the table {tableName} there is an entry with the value {value} in the column {columnName} {Environment.NewLine}(QUERY: {_command.CommandText})\"", Tester.IMAGE_STATUS_FAILED);
                     _tester.TestStopAsync();
                     return false;
                 }
