@@ -68,8 +68,8 @@ namespace HatPluginMySql
             }
         }
 
-        /* Получать записи */
-        public List<List<string>> GetEntries(string tableName)
+        /* Получать все записи из указанной таблицы */
+        public List<List<string>> GetEntriesFromTable(string tableName)
         {
             if (_tester.DefineTestStop() == true) return null;
             List<List<string>> entries = new List<List<string>>();
@@ -92,10 +92,50 @@ namespace HatPluginMySql
                     entries.Add(entry);
                 }
                 reader.Close();
+                _tester.SendMessageDebug($"GetEntriesFromTable(\"{tableName}\")", $"GetEntriesFromTable(\"{tableName}\")", Tester.PASSED, $"Получены все записи из таблицы \"{tableName}\"", $"All entries from the table \"{tableName}\" have been received", Tester.IMAGE_STATUS_PASSED);
             }
             catch (MySqlException ex)
             {
-                _tester.SendMessageDebug($"GetEntries(\"{tableName}\")", $"GetEntries(\"{tableName}\")", Tester.FAILED,
+                _tester.SendMessageDebug($"GetEntriesFromTable(\"{tableName}\")", $"GetEntriesFromTable(\"{tableName}\")", Tester.FAILED,
+                "Произошла ошибка: " + ex.Message + Environment.NewLine + Environment.NewLine + "Полное описание ошибка: " + ex.ToString(),
+                    "Error: " + ex.Message + Environment.NewLine + Environment.NewLine + "Full description of the error: " + ex.ToString(),
+                    Tester.IMAGE_STATUS_FAILED);
+                _tester.TestStopAsync();
+                _tester.ConsoleMsgError(ex.ToString());
+            }
+
+            return entries;
+        }
+
+        /* Получить записи */
+        public List<List<string>> GetEntries(string sqlQuery)
+        {
+            if (_tester.DefineTestStop() == true) return null;
+            List<List<string>> entries = new List<List<string>>();
+            List<string> entry = new List<string>();
+
+            try
+            {
+                _command = new MySqlCommand();
+                _command.Connection = _connection;
+                _command.CommandText = sqlQuery;
+                _command.CommandType = CommandType.Text;
+                MySqlDataReader reader = _command.ExecuteReader();
+                while (reader.Read())
+                {
+                    entry = new List<string>();
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        entry.Add(reader[i].ToString());
+                    }
+                    entries.Add(entry);
+                }
+                reader.Close();
+                _tester.SendMessageDebug($"GetEntries(\"{sqlQuery}\")", $"GetEntries(\"{sqlQuery}\")", Tester.PASSED, $"Получены записи из таблицы", $"Entries from the table are received", Tester.IMAGE_STATUS_PASSED);
+            }
+            catch (MySqlException ex)
+            {
+                _tester.SendMessageDebug($"GetEntries(\"{sqlQuery}\")", $"GetEntries(\"{sqlQuery}\")", Tester.FAILED,
                 "Произошла ошибка: " + ex.Message + Environment.NewLine + Environment.NewLine + "Полное описание ошибка: " + ex.ToString(),
                     "Error: " + ex.Message + Environment.NewLine + Environment.NewLine + "Full description of the error: " + ex.ToString(),
                     Tester.IMAGE_STATUS_FAILED);
