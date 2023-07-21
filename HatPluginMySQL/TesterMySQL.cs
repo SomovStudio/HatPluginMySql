@@ -284,13 +284,13 @@ namespace HatPluginMySql
 
             try
             {
-                _command = new MySql.Data.MySqlClient.MySqlCommand();
+                _command = new MySqlCommand();
                 _command.Connection = _connection;
                 _command.CommandType = CommandType.Text;
                 _command.CommandText = $"SELECT * FROM {tableName} WHERE {columnName} = {value}";
-                int result = _command.ExecuteNonQuery();
-
-                if (result < 0)
+                MySqlDataReader reader = _command.ExecuteReader();
+                
+                if (reader.HasRows == false)
                 {
                     _tester.SendMessageDebug($"AssertHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", $"AssertHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", Tester.FAILED, $"В таблице {tableName} в колонке {columnName} нет записи со значением {value} {Environment.NewLine}(ЗАПРОС: {_command.CommandText})", $"In the {tableName} table, there is no entry in the {columnName} column with the value {value} {Environment.NewLine}(QUERY: {_command.CommandText})", Tester.IMAGE_STATUS_FAILED);
                     _tester.TestStopAsync();
@@ -298,6 +298,8 @@ namespace HatPluginMySql
                 }
                 else
                 {
+                    reader.Read();
+                    reader.Close();
                     _tester.SendMessageDebug($"AssertHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", $"AssertHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", Tester.PASSED, $"В таблице {tableName} присутствует запись со значением {value} в колонке {columnName}", $"In the table {tableName} there is an entry with the value {value} in the column {columnName}", Tester.IMAGE_STATUS_PASSED);
                     return true;
                 }
@@ -323,13 +325,13 @@ namespace HatPluginMySql
 
             try
             {
-                _command = new MySql.Data.MySqlClient.MySqlCommand();
+                _command = new MySqlCommand();
                 _command.Connection = _connection;
                 _command.CommandType = CommandType.Text;
                 _command.CommandText = $"SELECT * FROM {tableName} WHERE {columnName} = {value}";
-                int result = _command.ExecuteNonQuery();
+                MySqlDataReader reader = _command.ExecuteReader();
 
-                if (result > 0)
+                if (reader.HasRows == true)
                 {
                     _tester.SendMessageDebug($"AssertDontHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", $"AssertDontHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", Tester.FAILED, $"В таблице {tableName} присутствует запись со значением {value} в колонке {columnName} {Environment.NewLine}(ЗАПРОС: {_command.CommandText})\"", $"In the table {tableName} there is an entry with the value {value} in the column {columnName} {Environment.NewLine}(QUERY: {_command.CommandText})\"", Tester.IMAGE_STATUS_FAILED);
                     _tester.TestStopAsync();
@@ -337,6 +339,8 @@ namespace HatPluginMySql
                 }
                 else
                 {
+                    reader.Read();
+                    reader.Close();
                     _tester.SendMessageDebug($"AssertDontHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", $"AssertDontHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", Tester.PASSED, $"В таблице {tableName} в колонке {columnName} нет записи со значением {value}", $"In the {tableName} table, there is no entry in the {columnName} column with the value {value}", Tester.IMAGE_STATUS_PASSED);
                     return true;
                 }
