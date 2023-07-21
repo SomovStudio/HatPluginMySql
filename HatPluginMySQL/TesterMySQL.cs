@@ -79,8 +79,8 @@ namespace HatPluginMySql
             {
                 _command = new MySqlCommand();
                 _command.Connection = _connection;
-                _command.CommandText = tableName;
                 _command.CommandType = CommandType.TableDirect;
+                _command.CommandText = tableName;
                 MySqlDataReader reader = _command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -108,7 +108,7 @@ namespace HatPluginMySql
         }
 
         /* Получить записи */
-        public List<List<string>> GetEntries(string sqlQuery)
+        public List<List<string>> GetEntries(string sqlQuertSelect)
         {
             if (_tester.DefineTestStop() == true) return null;
             List<List<string>> entries = new List<List<string>>();
@@ -118,8 +118,8 @@ namespace HatPluginMySql
             {
                 _command = new MySqlCommand();
                 _command.Connection = _connection;
-                _command.CommandText = sqlQuery;
                 _command.CommandType = CommandType.Text;
+                _command.CommandText = sqlQuertSelect;
                 MySqlDataReader reader = _command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -131,11 +131,11 @@ namespace HatPluginMySql
                     entries.Add(entry);
                 }
                 reader.Close();
-                _tester.SendMessageDebug($"GetEntries(\"{sqlQuery}\")", $"GetEntries(\"{sqlQuery}\")", Tester.PASSED, $"Получены записи из таблицы", $"Entries from the table are received", Tester.IMAGE_STATUS_PASSED);
+                _tester.SendMessageDebug($"GetEntries(\"{sqlQuertSelect}\")", $"GetEntries(\"{sqlQuertSelect}\")", Tester.PASSED, $"Получены записи из таблицы", $"Entries from the table are received", Tester.IMAGE_STATUS_PASSED);
             }
             catch (MySqlException ex)
             {
-                _tester.SendMessageDebug($"GetEntries(\"{sqlQuery}\")", $"GetEntries(\"{sqlQuery}\")", Tester.FAILED,
+                _tester.SendMessageDebug($"GetEntries(\"{sqlQuertSelect}\")", $"GetEntries(\"{sqlQuertSelect}\")", Tester.FAILED,
                 "Произошла ошибка: " + ex.Message + Environment.NewLine + Environment.NewLine + "Полное описание ошибка: " + ex.ToString(),
                     "Error: " + ex.Message + Environment.NewLine + Environment.NewLine + "Full description of the error: " + ex.ToString(),
                     Tester.IMAGE_STATUS_FAILED);
@@ -146,22 +146,115 @@ namespace HatPluginMySql
             return entries;
         }
 
-        /* Вставить запись */
-        public void SetEntry()
+        /* Вставить запись (возвращает номер записи или -1 если запрос не выполнен) */
+        public int SetEntry(string sqlQuertInsert)
         {
+            if (_tester.DefineTestStop() == true) return -1;
+            int value = -1;
 
+            try
+            {
+                _command = new MySql.Data.MySqlClient.MySqlCommand();
+                _command.Connection = _connection;
+                _command.CommandType = CommandType.Text;
+                _command.CommandText = sqlQuertInsert;
+                value = _command.ExecuteNonQuery();
+
+                if (value < 0)
+                {
+                    _tester.SendMessageDebug($"SetEntry(\"{sqlQuertInsert}\")", $"SetEntry(\"{sqlQuertInsert}\")", Tester.FAILED, "Неудалось добавить данные в базу данных", "Failed to add data to the database", Tester.IMAGE_STATUS_FAILED);
+                    _tester.TestStopAsync();
+                }
+                else
+                {
+                    _tester.SendMessageDebug($"SetEntry(\"{sqlQuertInsert}\")", $"SetEntry(\"{sqlQuertInsert}\")", Tester.PASSED, "Данные успешно добавлены в базу данных", "The data has been successfully added to the database", Tester.IMAGE_STATUS_PASSED);
+                }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                _tester.SendMessageDebug($"SetEntry(\"{sqlQuertInsert}\")", $"SetEntry(\"{sqlQuertInsert}\")", Tester.FAILED,
+                "Произошла ошибка: " + ex.Message + Environment.NewLine + Environment.NewLine + "Полное описание ошибка: " + ex.ToString(),
+                    "Error: " + ex.Message + Environment.NewLine + Environment.NewLine + "Full description of the error: " + ex.ToString(),
+                    Tester.IMAGE_STATUS_FAILED);
+                _tester.TestStopAsync();
+                _tester.ConsoleMsgError(ex.ToString());
+            }
+
+            return value;
         }
 
-        /* Изменить запись */
-        public void EditEntry()
+        /* Изменить запись (возвращает номер записи или -1 если запрос не выполнен) */
+        public int EditEntry(string sqlQuertUpdate)
         {
+            if (_tester.DefineTestStop() == true) return -1;
+            int value = -1;
 
+            try
+            {
+                _command = new MySql.Data.MySqlClient.MySqlCommand();
+                _command.Connection = _connection;
+                _command.CommandType = CommandType.Text;
+                _command.CommandText = sqlQuertUpdate;
+                value = _command.ExecuteNonQuery();
+
+                if (value < 0)
+                {
+                    _tester.SendMessageDebug($"EditEntry(\"{sqlQuertUpdate}\")", $"EditEntry(\"{sqlQuertUpdate}\")", Tester.FAILED, "Неудалось обновить данные в базу данных", "Data could not be updated in the database", Tester.IMAGE_STATUS_FAILED);
+                    _tester.TestStopAsync();
+                }
+                else
+                {
+                    _tester.SendMessageDebug($"EditEntry(\"{sqlQuertUpdate}\")", $"EditEntry(\"{sqlQuertUpdate}\")", Tester.PASSED, "Данные успешно обновлены в базу данных", "The data has been successfully updated to the database", Tester.IMAGE_STATUS_PASSED);
+                }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                _tester.SendMessageDebug($"EditEntry(\"{sqlQuertUpdate}\")", $"EditEntry(\"{sqlQuertUpdate}\")", Tester.FAILED,
+                "Произошла ошибка: " + ex.Message + Environment.NewLine + Environment.NewLine + "Полное описание ошибка: " + ex.ToString(),
+                    "Error: " + ex.Message + Environment.NewLine + Environment.NewLine + "Full description of the error: " + ex.ToString(),
+                    Tester.IMAGE_STATUS_FAILED);
+                _tester.TestStopAsync();
+                _tester.ConsoleMsgError(ex.ToString());
+            }
+
+            return value;
         }
 
-        /* Удалить запись */
-        public void RemoveEntry()
+        /* Удалить запись (возвращает номер записи или -1 если запрос не выполнен) */
+        public int RemoveEntry(string sqlQuertDelete)
         {
+            if (_tester.DefineTestStop() == true) return -1;
+            int value = -1;
 
+            try
+            {
+                _command = new MySql.Data.MySqlClient.MySqlCommand();
+                _command.Connection = _connection;
+                _command.CommandType = CommandType.Text;
+                _command.CommandText = sqlQuertDelete;
+                value = _command.ExecuteNonQuery();
+
+                if (value < 0)
+                {
+                    _tester.SendMessageDebug($"RemoveEntry(\"{sqlQuertDelete}\")", $"RemoveEntry(\"{sqlQuertDelete}\")", Tester.FAILED, "Неудалось удалить данные из базе данных", "Could not delete data from the database", Tester.IMAGE_STATUS_FAILED);
+                    _tester.TestStopAsync();
+                }
+                else
+                {
+                    _tester.SendMessageDebug($"RemoveEntry(\"{sqlQuertDelete}\")", $"RemoveEntry(\"{sqlQuertDelete}\")", Tester.PASSED, "Данные успешно удалены из базы данных", "Data has been successfully deleted from the database", Tester.IMAGE_STATUS_PASSED);
+                }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                _tester.SendMessageDebug($"RemoveEntry(\"{sqlQuertDelete}\")", $"RemoveEntry(\"{sqlQuertDelete}\")", Tester.FAILED,
+                "Произошла ошибка: " + ex.Message + Environment.NewLine + Environment.NewLine + "Полное описание ошибка: " + ex.ToString(),
+                    "Error: " + ex.Message + Environment.NewLine + Environment.NewLine + "Full description of the error: " + ex.ToString(),
+                    Tester.IMAGE_STATUS_FAILED);
+                _tester.TestStopAsync();
+                _tester.ConsoleMsgError(ex.ToString());
+            }
+
+            return value;
         }
 
         /* Найти запись */
