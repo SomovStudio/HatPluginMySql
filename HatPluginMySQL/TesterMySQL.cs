@@ -150,7 +150,7 @@ namespace HatPluginMySql
         public int SetEntry(string sqlQuertInsert)
         {
             if (_tester.DefineTestStop() == true) return -1;
-            int value = -1;
+            int result = -1;
 
             try
             {
@@ -158,9 +158,9 @@ namespace HatPluginMySql
                 _command.Connection = _connection;
                 _command.CommandType = CommandType.Text;
                 _command.CommandText = sqlQuertInsert;
-                value = _command.ExecuteNonQuery();
+                result = _command.ExecuteNonQuery();
 
-                if (value < 0)
+                if (result < 0)
                 {
                     _tester.SendMessageDebug($"SetEntry(\"{sqlQuertInsert}\")", $"SetEntry(\"{sqlQuertInsert}\")", Tester.FAILED, "Неудалось добавить данные в базу данных", "Failed to add data to the database", Tester.IMAGE_STATUS_FAILED);
                     _tester.TestStopAsync();
@@ -180,14 +180,14 @@ namespace HatPluginMySql
                 _tester.ConsoleMsgError(ex.ToString());
             }
 
-            return value;
+            return result;
         }
 
         /* Изменить запись (возвращает номер записи или -1 если запрос не выполнен) */
         public int EditEntry(string sqlQuertUpdate)
         {
             if (_tester.DefineTestStop() == true) return -1;
-            int value = -1;
+            int result = -1;
 
             try
             {
@@ -195,9 +195,9 @@ namespace HatPluginMySql
                 _command.Connection = _connection;
                 _command.CommandType = CommandType.Text;
                 _command.CommandText = sqlQuertUpdate;
-                value = _command.ExecuteNonQuery();
+                result = _command.ExecuteNonQuery();
 
-                if (value < 0)
+                if (result < 0)
                 {
                     _tester.SendMessageDebug($"EditEntry(\"{sqlQuertUpdate}\")", $"EditEntry(\"{sqlQuertUpdate}\")", Tester.FAILED, "Неудалось обновить данные в базу данных", "Data could not be updated in the database", Tester.IMAGE_STATUS_FAILED);
                     _tester.TestStopAsync();
@@ -217,14 +217,14 @@ namespace HatPluginMySql
                 _tester.ConsoleMsgError(ex.ToString());
             }
 
-            return value;
+            return result;
         }
 
         /* Удалить запись (возвращает номер записи или -1 если запрос не выполнен) */
         public int RemoveEntry(string sqlQuertDelete)
         {
             if (_tester.DefineTestStop() == true) return -1;
-            int value = -1;
+            int result = -1;
 
             try
             {
@@ -232,9 +232,9 @@ namespace HatPluginMySql
                 _command.Connection = _connection;
                 _command.CommandType = CommandType.Text;
                 _command.CommandText = sqlQuertDelete;
-                value = _command.ExecuteNonQuery();
+                result = _command.ExecuteNonQuery();
 
-                if (value < 0)
+                if (result < 0)
                 {
                     _tester.SendMessageDebug($"RemoveEntry(\"{sqlQuertDelete}\")", $"RemoveEntry(\"{sqlQuertDelete}\")", Tester.FAILED, "Неудалось удалить данные из базе данных", "Could not delete data from the database", Tester.IMAGE_STATUS_FAILED);
                     _tester.TestStopAsync();
@@ -254,7 +254,7 @@ namespace HatPluginMySql
                 _tester.ConsoleMsgError(ex.ToString());
             }
 
-            return value;
+            return result;
         }
 
         /* Найти запись */
@@ -275,6 +275,47 @@ namespace HatPluginMySql
 
         }
 
-        
+        /* Методы для проверки результата =================================== */
+
+        /* Проверяет присутствие значения в таблице базы данных */
+        public bool AssertHaveInTable(string tableName, string columnName, string value)
+        {
+            if (_tester.DefineTestStop() == true) return false;
+
+            try
+            {
+                _command = new MySql.Data.MySqlClient.MySqlCommand();
+                _command.Connection = _connection;
+                _command.CommandType = CommandType.Text;
+                _command.CommandText = $"SELECT * FROM {tableName} WHERE {columnName} = {value}";
+                int result = _command.ExecuteNonQuery();
+
+                if (result < 0)
+                {
+                    _tester.SendMessageDebug($"AssertHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", $"AssertHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", Tester.FAILED, $"В таблице {tableName} в колонке {columnName} нет записи со значением {value}", $"In the {tableName} table, there is no entry in the {columnName} column with the value {value}", Tester.IMAGE_STATUS_FAILED);
+                    _tester.TestStopAsync();
+                    return false;
+                }
+                else
+                {
+                    _tester.SendMessageDebug($"AssertHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", $"AssertHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", Tester.PASSED, $"В таблице {tableName} присутствует запись со значением {value} в колонке {columnName}", $"In the table {tableName} there is an entry with the value {value} in the column {columnName}", Tester.IMAGE_STATUS_PASSED);
+                    return true;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                _tester.SendMessageDebug($"AssertHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", $"AssertHaveInTable(\"{tableName}\", \"{columnName}\", \"{value}\")", Tester.FAILED,
+                "Произошла ошибка: " + ex.Message + Environment.NewLine + Environment.NewLine + "Полное описание ошибка: " + ex.ToString(),
+                    "Error: " + ex.Message + Environment.NewLine + Environment.NewLine + "Full description of the error: " + ex.ToString(),
+                    Tester.IMAGE_STATUS_FAILED);
+                _tester.TestStopAsync();
+                _tester.ConsoleMsgError(ex.ToString());
+            }
+
+            _tester.TestStopAsync();
+            return false;
+        }
+
+
     }
 }
