@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using HatFramework;
 using System.Data;
+using Google.Protobuf.WellKnownTypes;
 
 namespace HatPluginMySql
 {
@@ -148,6 +149,37 @@ namespace HatPluginMySql
             return entries;
         }
 
+        /* Получить таблицу записей */
+        public async Task<DataTable> GetDataTableAsync(string sqlQuertSelect)
+        {
+            if (_tester.DefineTestStop() == true) return null;
+
+            DataTable dataTable = new DataTable();
+
+            try
+            {
+                _command = new MySqlCommand();
+                _command.Connection = _connection;
+                _command.CommandType = CommandType.Text;
+                _command.CommandText = sqlQuertSelect;
+                MySqlDataReader reader = (MySqlDataReader)await _command.ExecuteReaderAsync();
+                dataTable.Load(reader);
+                reader.Close();
+                _tester.SendMessageDebug($"GetDataTableAsync(\"{sqlQuertSelect}\")", $"GetDataTableAsync(\"{sqlQuertSelect}\")", Tester.PASSED, $"Получена таблица записей", $"A table of records was obtained", Tester.IMAGE_STATUS_PASSED);
+            }
+            catch (MySqlException ex)
+            {
+                _tester.SendMessageDebug($"GetDataTableAsync(\"{sqlQuertSelect}\")", $"GetDataTableAsync(\"{sqlQuertSelect}\")", Tester.FAILED,
+                "Произошла ошибка: " + ex.Message + Environment.NewLine + Environment.NewLine + "Полное описание ошибка: " + ex.ToString(),
+                    "Error: " + ex.Message + Environment.NewLine + Environment.NewLine + "Full description of the error: " + ex.ToString(),
+                    Tester.IMAGE_STATUS_FAILED);
+                _tester.TestStopAsync();
+                _tester.ConsoleMsgError(ex.ToString());
+            }
+
+            return dataTable;
+        }
+
         /* Вставить запись (возвращает номер записи или -1 если запрос не выполнен) */
         public async Task<int> SetEntryAsync(string sqlQuertInsert)
         {
@@ -260,22 +292,92 @@ namespace HatPluginMySql
         }
 
         /* Найти запись */
-        public void FindEntry()
+        public async Task<bool> FindEntryAsync(string tableName, string columnName, string value)
         {
+            if (_tester.DefineTestStop() == true) return false;
+            bool result = false;
+            MySqlDataReader reader = null;
 
+            try
+            {
+                _command = new MySqlCommand();
+                _command.Connection = _connection;
+                _command.CommandType = CommandType.Text;
+                _command.CommandText = $"SELECT * FROM {tableName} WHERE {columnName} = {value}";
+                reader = (MySqlDataReader)await _command.ExecuteReaderAsync();
+                result = reader.HasRows;
+
+                if (result == false)
+                {
+                    _tester.SendMessageDebug($"FindEntryAsync(\"{tableName}\", \"{columnName}\", \"{value}\")", $"FindEntryAsync(\"{tableName}\", \"{columnName}\", \"{value}\")", Tester.COMPLETED, $"В таблице {tableName} в колонке {columnName} нет записи со значением {value}", $"In the {tableName} table, there is no entry in the {columnName} column with the value {value}", Tester.IMAGE_STATUS_MESSAGE);
+                }
+                else
+                {
+                    _tester.SendMessageDebug($"FindEntryAsync(\"{tableName}\", \"{columnName}\", \"{value}\")", $"FindEntryAsync(\"{tableName}\", \"{columnName}\", \"{value}\")", Tester.COMPLETED, $"В таблице {tableName} присутствует запись со значением {value} в колонке {columnName}", $"In the table {tableName} there is an entry with the value {value} in the column {columnName}", Tester.IMAGE_STATUS_MESSAGE);
+                }
+            }
+            catch (MySqlException ex)
+            {
+                _tester.SendMessageDebug($"FindEntryAsync(\"{tableName}\", \"{columnName}\", \"{value}\")", $"FindEntryAsync(\"{tableName}\", \"{columnName}\", \"{value}\")", Tester.FAILED,
+                "Произошла ошибка: " + ex.Message + Environment.NewLine + Environment.NewLine + "Полное описание ошибка: " + ex.ToString(),
+                "Error: " + ex.Message + Environment.NewLine + Environment.NewLine + "Full description of the error: " + ex.ToString(),
+                Tester.IMAGE_STATUS_FAILED);
+                _tester.TestStopAsync();
+                _tester.ConsoleMsgError(ex.ToString());
+            }
+
+            if (reader != null)
+            {
+                reader.Read();
+                reader.Close();
+            }
+            
+            return result;
         }
 
         /* Количество записей */
-        public void GetCountEntries()
+        public async Task<int> GetCountEntriesAsync(string sqlQuertSelect)
         {
+            if (_tester.DefineTestStop() == true) return -1;
+            int result = -1;
 
+            try
+            {
+                _command = new MySqlCommand();
+                _command.Connection = _connection;
+                _command.CommandType = CommandType.Text;
+                _command.CommandText = sqlQuertSelect;
+                MySqlDataReader reader = (MySqlDataReader)await _command.ExecuteReaderAsync();
+
+                DataTable dt = new DataTable();
+                dt.Load(reader);
+                result = dt.Rows.Count;
+                reader.Close();
+
+                if (result >= 0)
+                {
+                    _tester.SendMessageDebug($"GetCountEntriesAsync(\"{sqlQuertSelect}\")", $"GetCountEntriesAsync(\"{sqlQuertSelect}\")", Tester.PASSED, $"В таблице {result} записей", $"There are {result} entries in the table", Tester.IMAGE_STATUS_PASSED);
+                }
+                else
+                {
+                    _tester.SendMessageDebug($"GetCountEntriesAsync(\"{sqlQuertSelect}\")", $"GetCountEntriesAsync(\"{sqlQuertSelect}\")", Tester.FAILED, $"В таблице {result} записей", $"There are {result} entries in the table", Tester.IMAGE_STATUS_FAILED);
+                    _tester.TestStopAsync();
+                }
+            }
+            catch (MySqlException ex)
+            {
+                _tester.SendMessageDebug($"GetCountEntriesAsync(\"{sqlQuertSelect}\")", $"GetCountEntriesAsync(\"{sqlQuertSelect}\")", Tester.FAILED,
+                "Произошла ошибка: " + ex.Message + Environment.NewLine + Environment.NewLine + "Полное описание ошибка: " + ex.ToString(),
+                    "Error: " + ex.Message + Environment.NewLine + Environment.NewLine + "Full description of the error: " + ex.ToString(),
+                    Tester.IMAGE_STATUS_FAILED);
+                _tester.TestStopAsync();
+                _tester.ConsoleMsgError(ex.ToString());
+            }
+
+            return result;
         }
 
-        /* Выполнить запрос */
-        public void ExecuteQuery()
-        {
 
-        }
 
         /* Методы для проверки результата =================================== */
 
