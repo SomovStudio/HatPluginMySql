@@ -149,6 +149,37 @@ namespace HatPluginMySql
             return entries;
         }
 
+        /* Получить таблицу записей */
+        public async Task<DataTable> GetDataTableAsync(string sqlQuertSelect)
+        {
+            if (_tester.DefineTestStop() == true) return null;
+
+            DataTable dataTable = new DataTable();
+
+            try
+            {
+                _command = new MySqlCommand();
+                _command.Connection = _connection;
+                _command.CommandType = CommandType.Text;
+                _command.CommandText = sqlQuertSelect;
+                MySqlDataReader reader = (MySqlDataReader)await _command.ExecuteReaderAsync();
+                dataTable.Load(reader);
+                reader.Close();
+                _tester.SendMessageDebug($"GetDataTableAsync(\"{sqlQuertSelect}\")", $"GetDataTableAsync(\"{sqlQuertSelect}\")", Tester.PASSED, $"Получена таблица записей", $"A table of records was obtained", Tester.IMAGE_STATUS_PASSED);
+            }
+            catch (MySqlException ex)
+            {
+                _tester.SendMessageDebug($"GetDataTableAsync(\"{sqlQuertSelect}\")", $"GetDataTableAsync(\"{sqlQuertSelect}\")", Tester.FAILED,
+                "Произошла ошибка: " + ex.Message + Environment.NewLine + Environment.NewLine + "Полное описание ошибка: " + ex.ToString(),
+                    "Error: " + ex.Message + Environment.NewLine + Environment.NewLine + "Full description of the error: " + ex.ToString(),
+                    Tester.IMAGE_STATUS_FAILED);
+                _tester.TestStopAsync();
+                _tester.ConsoleMsgError(ex.ToString());
+            }
+
+            return dataTable;
+        }
+
         /* Вставить запись (возвращает номер записи или -1 если запрос не выполнен) */
         public async Task<int> SetEntryAsync(string sqlQuertInsert)
         {
