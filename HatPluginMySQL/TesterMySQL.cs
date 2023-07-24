@@ -50,12 +50,14 @@ namespace HatPluginMySql
         /* Закрыть соединение */
         public void ConnectionClose()
         {
-            if (_tester.DefineTestStop() == true && _connection == null) return;
-            
             try
             {
-                _connection.Close();
-                _tester.SendMessageDebug($"ConnectionClose()", $"ConnectionClose()", Tester.PASSED, "Подключение к базе данных закрыто", "The connection to the database is closed", Tester.IMAGE_STATUS_PASSED);
+                if (_connection != null)
+                {
+                    _connection.Close();
+                    if (_tester.DefineTestStop() == true) _tester.SendMessageDebug($"ConnectionClose()", $"ConnectionClose()", Tester.COMPLETED, "Подключение к базе данных закрыто", "The connection to the database is closed", Tester.IMAGE_STATUS_MESSAGE);
+                    else _tester.SendMessageDebug($"ConnectionClose()", $"ConnectionClose()", Tester.PASSED, "Подключение к базе данных закрыто", "The connection to the database is closed", Tester.IMAGE_STATUS_PASSED);
+                }
             }
             catch (MySqlException ex)
             {
