@@ -305,16 +305,48 @@ namespace HatPluginMySql
         }
 
         /* Количество записей */
-        public void GetCountEntries()
+        public async Task<int> GetCountEntriesAsync(string sqlQuertSelect)
         {
+            if (_tester.DefineTestStop() == true) return -1;
+            int result = -1;
 
+            try
+            {
+                _command = new MySqlCommand();
+                _command.Connection = _connection;
+                _command.CommandType = CommandType.Text;
+                _command.CommandText = sqlQuertSelect;
+                MySqlDataReader reader = (MySqlDataReader)await _command.ExecuteReaderAsync();
+
+                DataTable dt = new DataTable();
+                dt.Load(reader);
+                result = dt.Rows.Count;
+                reader.Close();
+
+                if (result >= 0)
+                {
+                    _tester.SendMessageDebug($"GetCountEntriesAsync(\"{sqlQuertSelect}\")", $"GetCountEntriesAsync(\"{sqlQuertSelect}\")", Tester.PASSED, $"В таблице {result} записей", $"There are {result} entries in the table", Tester.IMAGE_STATUS_PASSED);
+                }
+                else
+                {
+                    _tester.SendMessageDebug($"GetCountEntriesAsync(\"{sqlQuertSelect}\")", $"GetCountEntriesAsync(\"{sqlQuertSelect}\")", Tester.FAILED, $"В таблице {result} записей", $"There are {result} entries in the table", Tester.IMAGE_STATUS_FAILED);
+                    _tester.TestStopAsync();
+                }
+            }
+            catch (MySqlException ex)
+            {
+                _tester.SendMessageDebug($"GetCountEntriesAsync(\"{sqlQuertSelect}\")", $"GetCountEntriesAsync(\"{sqlQuertSelect}\")", Tester.FAILED,
+                "Произошла ошибка: " + ex.Message + Environment.NewLine + Environment.NewLine + "Полное описание ошибка: " + ex.ToString(),
+                    "Error: " + ex.Message + Environment.NewLine + Environment.NewLine + "Full description of the error: " + ex.ToString(),
+                    Tester.IMAGE_STATUS_FAILED);
+                _tester.TestStopAsync();
+                _tester.ConsoleMsgError(ex.ToString());
+            }
+
+            return result;
         }
 
-        /* Выполнить запрос */
-        public void ExecuteQuery()
-        {
 
-        }
 
         /* Методы для проверки результата =================================== */
 
