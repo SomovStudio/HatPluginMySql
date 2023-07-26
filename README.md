@@ -17,6 +17,13 @@
 <br>Скачать по ссылке: https://github.com/SomovStudio/Hat/releases
 
 <hr>
+
+<p align="center">
+  <img src="https://github.com/SomovStudio/HatPluginMySql/blob/dev/Images/plugin_code-min.png">
+</p>
+
+<hr>
+
 Официальная страница приложения: https://somovstudio.github.io/hat.html
 <br>Документация online:  https://somovstudio.github.io/help/Hat/index.html
 <br>Документация offline: <a href="https://github.com/SomovStudio/Hat/raw/main/Help/help.chm">help.chm</a>
