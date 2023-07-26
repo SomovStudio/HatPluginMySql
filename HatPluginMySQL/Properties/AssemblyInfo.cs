@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // набора атрибутов. Измените значения этих атрибутов для изменения сведений,
 // связанные со сборкой.
 [assembly: AssemblyTitle("HatPluginMySQL")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Плагин для браузера Hat который позволяет выполнять автоматизированное тестирование данных в базе данных MySql")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Somov Studio")]
 [assembly: AssemblyProduct("HatPluginMySQL")]
 [assembly: AssemblyCopyright("Copyright © Somov Studio 2023")]
 [assembly: AssemblyTrademark("")]
