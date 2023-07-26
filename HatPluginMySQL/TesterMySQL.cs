@@ -165,7 +165,17 @@ namespace HatPluginMySql
                 MySqlDataReader reader = (MySqlDataReader)await _command.ExecuteReaderAsync();
                 dataTable.Load(reader);
                 reader.Close();
-                _tester.SendMessageDebug($"GetDataTableAsync(\"{sqlQuertSelect}\")", $"GetDataTableAsync(\"{sqlQuertSelect}\")", Tester.PASSED, $"Получена таблица записей", $"A table of records was obtained", Tester.IMAGE_STATUS_PASSED);
+
+                if (dataTable.Rows.Count > 0)
+                {
+                    _tester.SendMessageDebug($"GetDataTableAsync(\"{sqlQuertSelect}\")", $"GetDataTableAsync(\"{sqlQuertSelect}\")", Tester.PASSED, $"Получена таблица записей", $"A table of records was obtained", Tester.IMAGE_STATUS_PASSED);
+                }
+                else
+                {
+                    _tester.SendMessageDebug($"GetDataTableAsync(\"{sqlQuertSelect}\")", $"GetDataTableAsync(\"{sqlQuertSelect}\")", Tester.FAILED, $"В таблице нет записей", $"There are no entries in the table", Tester.IMAGE_STATUS_FAILED);
+                    _tester.TestStopAsync();
+                }
+                
             }
             catch (MySqlException ex)
             {
