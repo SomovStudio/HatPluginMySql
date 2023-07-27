@@ -24,9 +24,11 @@
 
 <hr>
 
-Официальная страница приложения: https://somovstudio.github.io/hat.html
-<br>Документация online:  https://somovstudio.github.io/help/Hat/index.html
-<br>Документация offline: <a href="https://github.com/SomovStudio/Hat/raw/main/Help/help.chm">help.chm</a>
+Документация:
+<br>Установка плагина:  https://somovstudio.github.io/help/Hat/index.html?Newtopic54.html
+<br>Подключение плагина к проекту:  https://somovstudio.github.io/help/Hat/index.html?Newtopic57.html
+<br>Общий пример автотеста:  https://somovstudio.github.io/help/Hat/index.html?Newtopic58.html
+
 
 <hr>
 <br>Плагин разработан при поддержке компании "<b>Зионек</b>" https://zionec.ru/
