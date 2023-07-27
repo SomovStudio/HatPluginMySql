@@ -30,11 +30,13 @@
 <br>Подключение плагина к проекту:  https://somovstudio.github.io/help/Hat/index.html?Newtopic57.html
 <br>Общий пример автотеста:  https://somovstudio.github.io/help/Hat/index.html?Newtopic58.html
 
-
 <hr>
-<br>Плагин разработан при поддержке компании "<b>Зионек</b>" https://zionec.ru/
-<br>Компания "<b>Зионек</b>" занимается разработкой "Интернет-магазинов", "Корпоративных порталов", "CRM-систем" и собственных решений.
-<br><br>
-<p align="center">
-  <img src="https://github.com/SomovStudio/Hat/blob/main/Img/partners/companyzionec.png">
+
+<p style="color: #000000; background-color: #FFFFFF">
+	<br>Плагин разработан при поддержке компании "<b>Зионек</b>" https://zionec.ru/
+	<br>Компания "<b>Зионек</b>" занимается разработкой "Интернет-магазинов", "Корпоративных порталов", "CRM-систем" и собственных решений.
+	<br><br>
+	<p align="center">
+	  <img src="https://github.com/SomovStudio/Hat/blob/main/Img/partners/companyzionec.png">
+	</p>
 </p>
