@@ -30,6 +30,8 @@
 <br>Подключение плагина к проекту:  https://somovstudio.github.io/help/Hat/index.html?Newtopic57.html
 <br>Общий пример автотеста:  https://somovstudio.github.io/help/Hat/index.html?Newtopic58.html
 <br>Описание встроенных методов: https://somovstudio.github.io/help/Hat/index.html?TesterMySql1.html
+<br>
+<br>Документация offline: <a href="https://github.com/SomovStudio/Hat/raw/main/Help/help.chm">help.chm</a>
 
 <hr>
 
