@@ -29,6 +29,7 @@
 <br>Установка плагина:  https://somovstudio.github.io/help/Hat/index.html?Newtopic54.html
 <br>Подключение плагина к проекту:  https://somovstudio.github.io/help/Hat/index.html?Newtopic57.html
 <br>Общий пример автотеста:  https://somovstudio.github.io/help/Hat/index.html?Newtopic58.html
+<br>Описание встроенных методов: https://somovstudio.github.io/help/Hat/index.html?TesterMySql1.html
 
 <hr>
 
