@@ -37,9 +37,8 @@
 
 <b>Видео:</b>
 <br>
-Уроки:
 <ul>
-	<li><a href="https://youtu.be/z7YmoBKGzeU" target="_blank">Урок №5</a>: Плагин HatPluginMySql (установка в Hat и подключение к автотестам)</li>
+	<li><a href="https://youtu.be/z7YmoBKGzeU" target="_blank">Видеообзор</a>: Плагин HatPluginMySql (установка в Hat и подключение к автотестам)</li>
 </ul>
 
 <hr>
