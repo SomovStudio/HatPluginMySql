@@ -5,7 +5,7 @@
 Плагин для браузера Hat который позволяет выполнять автоматизированное тестирование данных в базе данных MySql
 <br>
 <br><b>Скачать плагин:</b>
-<br>https://github.com/SomovStudio/HatPluginMySql/releases/download/v1.0.2503.2024/HatPluginMySql-1.0.2503.2024.zip
+<br>https://github.com/SomovStudio/HatPluginMySql/releases/download/1.0.2503.2024/HatPluginMySql-1.0.2503.2024.zip
 <br>(актуальная версия плагина 1.0.2503.2024 от 25.03.2024)
 <hr>
 
