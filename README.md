@@ -2,20 +2,24 @@
 
 [![License](http://img.shields.io/:license-GPL2-blue.svg)](https://github.com/SomovStudio/HatPluginMySql/blob/main/LICENSE)
 
+A plugin for the Hat browser that allows you to perform automated testing of data in a MySQL database.
+<br>
+<br>
 Плагин для браузера Hat который позволяет выполнять автоматизированное тестирование данных в базе данных MySql
 <br>
-<br><b>Скачать плагин:</b>
-<br>https://github.com/SomovStudio/HatPluginMySql/releases/download/1.0.2503.2024/HatPluginMySql-1.0.2503.2024.zip
-<br>(актуальная версия плагина 1.0.2503.2024 от 25.03.2024)
+<br><b>Download the plugin:</b>
+<br>https://github.com/SomovStudio/HatPluginMySql/releases/download/1.0.2507.2024/HatPluginMySql-1.0.2507.2024.zip
+<br>Current version (актуальная версия) 1.0.2507.2024 (25.07.2024)
 <hr>
 
 <p align="center">
   <img src="https://github.com/SomovStudio/HatPluginMySql/blob/main/Images/plugin_small-min.png">
 </p>
 
-<b>Системные требования:</b>
-<br>Плагин совместим с браузером Hat начиная с версии 1.3
-<br>Скачать по ссылке: https://github.com/SomovStudio/Hat/releases
+<b>System requirements (системные требования):</b>
+<br>The plugin is compatible with the Hat browser starting from version 1.4
+<br>(плагин совместим с браузером Hat начиная с версии 1.4)
+<br>Download the browser: https://github.com/SomovStudio/Hat/releases
 
 <hr>
 
@@ -25,27 +29,28 @@
 
 <hr>
 
-<b>Документация:</b>
+<b>Documentation (документация):</b>
 <br>Установка плагина:  https://somovstudio.github.io/help/Hat/index.html?Newtopic54.html
 <br>Подключение плагина к проекту:  https://somovstudio.github.io/help/Hat/index.html?Newtopic57.html
 <br>Общий пример автотеста:  https://somovstudio.github.io/help/Hat/index.html?Newtopic58.html
 <br>Описание встроенных методов: https://somovstudio.github.io/help/Hat/index.html?TesterMySql1.html
 <br>
-<br>Документация offline: <a href="https://github.com/SomovStudio/Hat/raw/main/Help/help.chm">help.chm</a>
+<br>Offline documentation: <a href="https://github.com/SomovStudio/Hat/raw/main/Help/help.chm">help.chm</a>
 
 <hr>
 
-<b>Видео:</b>
+<b>Video (видео):</b>
 <br>
 <ul>
-	<li><a href="https://youtu.be/z7YmoBKGzeU" target="_blank">Видеообзор</a>: Плагин HatPluginMySql (установка в Hat и подключение к автотестам)</li>
+	<li><a href="https://youtu.be/z7YmoBKGzeU" target="_blank">Видеообзор</a>: Plugin HatPluginMySql installation and connection to autotests (установка и подключение к автотестам)</li>
 </ul>
 
 <hr>
-
-<br>Плагин разработан при поддержке компании "<b>Зионек</b>" https://zionec.ru/
-<br>Компания "<b>Зионек</b>" занимается разработкой "Интернет-магазинов", "Корпоративных порталов", "CRM-систем" и собственных решений.
+<br>The plugin was developed with the support of the <b><a href="https://zionec.ru/">Zionec</a></b> company.
+<br>The Zionec company develops "Online stores", "Corporate portals", "CRM systems" and its own solutions.
 <br><br>
 <p align="center">
   <img src="https://github.com/SomovStudio/Hat/blob/main/Img/partners/companyzionec.png">
 </p>
+<br>Плагин разработан при поддержке компании "<b>Зионек</b>" https://zionec.ru/
+<br>Компания "<b>Зионек</b>" занимается разработкой "Интернет-магазинов", "Корпоративных порталов", "CRM-систем" и собственных решений.
