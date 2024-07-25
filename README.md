@@ -8,7 +8,7 @@ A plugin for the Hat browser that allows you to perform automated testing of dat
 Плагин для браузера Hat который позволяет выполнять автоматизированное тестирование данных в базе данных MySql
 <br>
 <br><b>Download the plugin:</b>
-<br>https://github.com/SomovStudio/HatPluginMySql/releases/download/1.0.2503.2024/HatPluginMySql-1.0.2503.2024.zip
+<br>https://github.com/SomovStudio/HatPluginMySql/releases/download/1.0.2507.2024/HatPluginMySql-1.0.2507.2024.zip
 <br>Current version (актуальная версия) 1.0.2507.2024 (25.07.2024)
 <hr>
 
