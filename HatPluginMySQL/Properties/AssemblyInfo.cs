@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Somov Studio")]
 [assembly: AssemblyProduct("HatPluginMySQL")]
-[assembly: AssemblyCopyright("Copyright © Somov Studio 2024")]
+[assembly: AssemblyCopyright("Copyright © Somov Studio 2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // Можно задать все значения или принять номера сборки и редакции по умолчанию 
 // используя "*", как показано ниже:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.2507.2024")]
-[assembly: AssemblyFileVersion("1.0.2507.2024")]
+[assembly: AssemblyVersion("1.0.1901.2025")]
+[assembly: AssemblyFileVersion("1.0.1901.2025")]
