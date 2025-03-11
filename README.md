@@ -2,14 +2,19 @@
 
 [![License](http://img.shields.io/:license-GPL2-blue.svg)](https://github.com/SomovStudio/HatPluginMySql/blob/main/LICENSE)
 
+<h2>Development has been moved to another repository 
+<br>(Разработка перенесена в другой репозиторий)</h2>
+<a href="https://gitflic.ru/project/somovstudio/hatpluginmysql">https://gitflic.ru/project/somovstudio/hatpluginmysql</a>
+
+<hr>
+
 A plugin for the Hat browser that allows you to perform automated testing of data in a MySQL database.
 <br>
 <br>
 Плагин для браузера Hat который позволяет выполнять автоматизированное тестирование данных в базе данных MySql
 <br>
 <br><b>Download the plugin:</b>
-<br>https://github.com/SomovStudio/HatPluginMySql/releases/download/1.0.1901.2025/HatPluginMySql-1.0.1901.2025.zip
-<br>Current version (актуальная версия) 1.0.1901.2025 (19.01.2025)
+<br>All builds can be downloaded from (все сборки можно скачать с) <a target="_blank" href="https://drive.google.com/drive/folders/1X-dtbYdjTcpMsWYlUjUupl3PU0BuKCwK">Google Disk</a>
 <hr>
 
 <p align="center">
