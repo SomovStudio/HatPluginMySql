@@ -51,11 +51,11 @@ A plugin for the Hat browser that allows you to perform automated testing of dat
 </ul>
 
 <hr>
-<br>The plugin was developed with the support of the <b><a href="https://zionec.ru/">Zionec</a></b> company.
+<br>The plugin was developed with the non-commercial support of the <b><a href="https://zionec.ru/">Zionec</a></b> company.
 <br>The Zionec company develops "Online stores", "Corporate portals", "CRM systems" and its own solutions.
 <br><br>
 <p align="center">
   <img src="https://github.com/SomovStudio/Hat/blob/main/Img/partners/companyzionec.png">
 </p>
-<br>Плагин разработан при поддержке компании "<b>Зионек</b>" https://zionec.ru/
+<br>Плагин разработан при некоммерческой поддержке компании "<b>Зионек</b>" https://zionec.ru/
 <br>Компания "<b>Зионек</b>" занимается разработкой "Интернет-магазинов", "Корпоративных порталов", "CRM-систем" и собственных решений.
