@@ -1,3 +1,17 @@
+Обновление HatPluginMySql 1.0.15.0 (28.03.2026)
+
+Список обновлений:
+
+- HatFramework 1.4.18.2 -> HatFramework 1.5.0.3
+- System.IO.Pipelines.10.0.2 -> System.IO.Pipelines.10.0.5
+- Microsoft.Bcl.AsyncInterfaces.10.0.2 -> Microsoft.Bcl.AsyncInterfaces.10.0.5
+- System.Security.Permissions.10.0.2 -> System.Security.Permissions.10.0.5
+- System.Diagnostics.DiagnosticSource.10.0.2 -> System.Diagnostics.DiagnosticSource.10.0.5
+- Google.Protobuf.3.33.5 -> Google.Protobuf.3.34.1
+- System.Configuration.ConfigurationManager.10.0.2 -> System.Configuration.ConfigurationManager.10.0.5
+
+-----------------------------
+
 Обновление HatPluginMySql 1.0.14.18 (06.02.2026)
 
 Список обновлений:
